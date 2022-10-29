@@ -20,7 +20,6 @@ import Onvacation from '../components/Home/Onvacation';
 
 const { Content } = Layout;
 
-
 const Home = () => {
   const [isLoad, setIsLoad] = useState(true);
   const { user } = useHeader();

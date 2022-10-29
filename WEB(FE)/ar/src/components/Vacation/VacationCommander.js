@@ -104,7 +104,6 @@ const CustomToolbar = () => {
   const Endday = end.getFullYear() + "-" + (end.getMonth()+1) + "-" + end.getDate();
 
   const handleGetData = (e) => {
-    e.preventDefault();
     
     let select = [];
     const data = gridRef.current.getSelectedRows();

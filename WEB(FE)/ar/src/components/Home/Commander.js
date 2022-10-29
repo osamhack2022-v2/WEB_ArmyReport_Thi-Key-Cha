@@ -235,8 +235,8 @@ const Commander = () => {
                     <div>
                         <Grid container>
                             { element.map((User, index)=>(
-                                <Grid item xs={6} md={2} lg={2} key={index}>
-                                    <UserLocCard  User={User} />
+                                <Grid item xs={6} md={5} lg={5} key={index}>
+                                    <UserLocCard className='user-info' User={User} />
                                 </Grid>
                             ))}
                         </Grid>

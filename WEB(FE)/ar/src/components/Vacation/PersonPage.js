@@ -8,17 +8,10 @@ import Box from '@mui/material/Box';
 import useHeader from '../base/hooks/useHeader';
 import Button from '@mui/material/Button';
 
-import { useDetectClickOutside } from 'react-detect-click-outside';
-
 import Approve from './VacationJudge/Approve';
 import Reject from './VacationJudge/Reject';
 import Pending from './VacationJudge/Pending';
 import NotApplicate from './VacationJudge/NotApplicate';
-import styled from 'styled-components';
-
-const DesignPerson = styled.div`
-
-`;
 
 const PersonPage = () => {
     const {user} = useHeader();
@@ -36,10 +29,11 @@ const PersonPage = () => {
 
     useEffect(()=>{
         getUserVacation(uid).then((v)=>{
+            console.log(v);
             if (v === 'false'){
                 setIsApplicate(false);
             }else{
-                if(v.Positive === false || v.Positive === true){
+                if(v.Positive === 1 || v.Positive === -1){
                     setUserInfo({
                         'Startdate' : v.Startdate,
                         'Enddate' : v.Enddate,
@@ -47,7 +41,12 @@ const PersonPage = () => {
                     })
                     setIsApplicate(true);
                     setIsExamine(v.Examine);
-                    setIsPositive(v.Positive);
+                    console.log(v.Positive);
+                    if(v.Positive === 1){
+                        setIsPositive(true);
+                    }else{
+                        setIsPositive(false);
+                    }
                 }else{
                     setUserInfo({
                         'Startdate' : v.Startdate,
@@ -91,7 +90,7 @@ const PersonPage = () => {
                 }
                 <Button  onClick={onOpenhandle} variant="contained">
                     휴가신청
-                    {Open && <Applicate  onComplete={()=>{
+                    {Open && <Applicate  Open={Open} onComplete={()=>{
                         setOpen(false);
                     }}/>}
                 </Button>
