@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import dayjs from "dayjs";
-
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import FormControl from '@mui/material/FormControl';
@@ -11,15 +9,13 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 import { useDetectClickOutside } from 'react-detect-click-outside';
 
 import useHeader from '../base/hooks/useHeader';
-import { doc, getDoc, setDoc, serverTimestamp, Timestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 
 import db from '../../database/DB_Manager';
-import { useSelector } from 'react-redux';
 import { Stack } from '@mui/material';
 import moment from 'moment';
 
@@ -35,9 +31,7 @@ const style = {
     p: 4,
 };
 
-
-
-const Applicate = ({ onComplete, closeDropdown }) => {
+const Applicate = ({ onComplete }) => {
     const {user} = useHeader();
     const userid = user.uid;
 
@@ -61,7 +55,19 @@ const Applicate = ({ onComplete, closeDropdown }) => {
     const DesRef = useRef();
     const ContentRef = useRef();
     const NoteRef = useRef();
-    const Openref = useDetectClickOutside({onTriggered: closeDropdown});
+    const ref = useRef(null);
+    
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            onComplete();
+        }
+      };
+      document.addEventListener('click', handleClickOutside, true);
+      return () => {
+        document.removeEventListener('click', handleClickOutside, true);
+      };
+    }, [ onComplete ]);
 
     useEffect(()=>{
         getData(userid);
@@ -96,7 +102,6 @@ const Applicate = ({ onComplete, closeDropdown }) => {
     };
 
     const onChange = (e) => {
-        console.log(e);
         const {
             target : {name, value}
         } = e;
@@ -114,12 +119,6 @@ const Applicate = ({ onComplete, closeDropdown }) => {
     const EndhandleChange = (Value) => {
         setEndvalue(Value.$d);
     };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    /* if compnay have Applicate, give the my state information for report my sickness. */
 
     const onhandleApplicate = async(e) => {
         getData(userid);
@@ -148,9 +147,8 @@ const Applicate = ({ onComplete, closeDropdown }) => {
     return (
         <>
             <Modal
-                ref={Openref}
                 open={open}
-                onClose={handleClose}
+                onClose={onComplete}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >

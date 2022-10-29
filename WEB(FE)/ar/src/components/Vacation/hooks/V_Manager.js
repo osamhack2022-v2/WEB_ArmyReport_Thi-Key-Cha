@@ -81,6 +81,7 @@ export async function EndToday(){
                 id : count,
                 End : res.data().Class+ " " + res.data().Name,
             };
+            console.log(user);
             v_list.push(user);
             count += 1;
         }
@@ -197,12 +198,13 @@ export async function getUserVacation(uid){
         'Enddate' : new Date(),
         'Content' : '',
         'Examine' : false,
+        'Positive': 0,
     };
     const UserRef = doc(db, '02155004', '본부중대', 'Vacation', `${uid}`);
     const docSnap = await getDoc(UserRef);
 
     if(docSnap.exists()){
-        if(docSnap.data().Positive === false || docSnap.data().Positive === true){
+        if(docSnap.data().Positive === -1 || docSnap.data().Positive === 1){
             UserData.Startdate = new Date(docSnap.data().Startdate.seconds * 1000);
             UserData.Enddate = new Date(docSnap.data().Enddate.seconds * 1000);
             UserData.Content = docSnap.data().Content;
@@ -213,9 +215,9 @@ export async function getUserVacation(uid){
             UserData.Enddate = new Date(docSnap.data().Enddate.seconds * 1000);
             UserData.Content = docSnap.data().Content;
             UserData.Examine = docSnap.data().Examine;
-        }        
+        } 
     }else{
-        return false;
+        return 0;
     }
     return UserData;
 };

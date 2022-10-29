@@ -2,38 +2,37 @@ import React, { useState } from 'react'
 
 import { Paper, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import moment from 'moment';
 
 const Pending = ({user}) => {
-    const [User, setUser] = useState({user});
+    const [User, setUser] = useState(user);
+    const [Startdate, setStartdate] = useState(moment(User.Startdate).format('YYYY-MM-DD'));
+    const [Enddate, setEnddate] = useState(moment(User.Enddate).format('YYYY-MM-DD'));
+
     return (
         <>
             <Box
                 sx={{
+                    mx : 70,
                     p: 1,
-                    bgcolor: 'background.default',
-                    display: 'grid',
-                    gridTemplateColumns: { md: '1fr 1fr' },
-                    gap: 1,
+                    width : 350,
+                    borderRadius: 2,
                 }}
             >
-                <Paper elevation={3}>
-                    <Typography variant="h3" align='center' gutterBottom>
+                <Paper
+                    elevation={3}
+                    justifycontent="center"
+                >
+                    <Typography variant="h4" align='center' gutterBottom>
                         내 휴가
                     </Typography><br/>
-                </Paper> 
-                <Paper>
-                    <Typography variant="h4" align='center' gutterBottom>
-                        출발일 : {User.Startdate}
+                    <Typography variant="body1" align='center' gutterBottom>
+                        출발일 : {Startdate}
                     </Typography><br/>
-                </Paper>
-                <Paper>
-                    <Typography variant="h4" align='center' gutterBottom>
-                        도착일 : {User.Enddate}
+                    <Typography variant="body1" align='center' gutterBottom>
+                        도착일 : {Enddate}
                     </Typography><br/>
-                </Paper>
-                <Paper>
-                    <Typography variant="h4" align='center' gutterBottom>
+                    <Typography variant="body1" align='center' gutterBottom>
                         휴가내용 : {User.Content}
                     </Typography>
                 </Paper>
