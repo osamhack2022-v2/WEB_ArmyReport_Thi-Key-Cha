@@ -7,7 +7,7 @@ const AuthBlock = styled.div`
   margin-top: -120px;
   top: 0;
   width: 1920px;
-  height: 1920px;
+  height: 1240px;
   background-color: #222831;
   background-size: cover;
 `

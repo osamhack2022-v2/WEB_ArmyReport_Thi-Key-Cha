@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { CallLocdata } from '../components/Home/hooks/HomeValue';
 import useHeader from '../components/base/hooks/useHeader';
 import Header from '../components/base/Header';
 import Footer from '../components/base/Footer';
@@ -12,13 +11,18 @@ import AuthLoadBackground from '../components/Auth/AuthLoadBackground';
 import db from '../database/DB_Manager';
 import { UserActions } from '../app/slice/UserSlice';
 
-import { onSnapshot, doc, getDoc, query, getDocs, collection, where } from "firebase/firestore";
+import { onSnapshot, doc, getDoc } from "firebase/firestore";
 
 import "antd/dist/antd.min.css";
 import { Layout } from 'antd';
 import Onvacation from '../components/Home/Onvacation';
+import styled from 'styled-components';
 
 const { Content } = Layout;
+
+const HomeDesign = styled.div`
+  height: 720px;
+`;
 
 const Home = () => {
   const [isLoad, setIsLoad] = useState(true);
@@ -27,6 +31,8 @@ const Home = () => {
   const [rollcall, setRollCall] = useState(false);
   const [Boss, setBoss] = useState(false);
   const [isVacation, setIsVacation] = useState(false);
+
+  const [Open, setOpen] = useState(false);
 
   const unsub = onSnapshot(doc(db,"02155004", "본부중대", "User",`${uid}`), (doc) => {
     setRollCall(doc.data().Timetorollcall);
@@ -68,28 +74,34 @@ const Home = () => {
         <Layout className="layout">
           <Header />
           <Content>
-            { !Boss && 
-              <>
-              { isVacation &&
-                <Onvacation />
-              }
-              { !isVacation &&
-                <>
-                  <Content
-                    style={{
-                      padding: '0 50px',
-                    }}
-                  >
-                    <div className="site-layout-content">
-                      <Whereareyou />
-                    </div>
-                  </Content>
-                  { rollcall && <Patient /> }
-                </>
-              }
-              </>
-            }
-            { Boss && <Commander />}
+            <HomeDesign>
+              <div>
+                { !Boss && 
+                  <>
+                  { isVacation &&
+                    <Onvacation />
+                  }
+                  { !isVacation &&
+                    <>
+                      <Content
+                        style={{
+                          padding: '0 50px',
+                        }}
+                      >
+                        <div className="site-layout-content">
+                          <Whereareyou />
+                        </div>
+                      </Content>
+                      { rollcall && <Patient Open={Open} onComplete={()=>{
+                        setOpen(false);
+                      }}/> }
+                    </>
+                  }
+                  </>
+                }
+                { Boss && <Commander />}
+              </div>
+            </HomeDesign>
           </Content>
           <Footer />
         </Layout>
