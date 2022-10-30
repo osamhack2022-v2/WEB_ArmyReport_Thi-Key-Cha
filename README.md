@@ -1,8 +1,6 @@
 # WEB_ArmyReport_Thi-Key-Cha
 
-![1차 아이콘 시안AR_Character](https://user-images.githubusercontent.com/110546006/198884370-a50caa0c-da5f-4ca4-9be8-9ef8e8268c28.png)
 ![1차 앱아이콘 시안123](https://user-images.githubusercontent.com/110546006/198884364-7ec642bb-907d-432c-9182-bc1586e2f373.png)
-![1차 브랜드 로고AR_Logo](https://user-images.githubusercontent.com/110546006/198884377-03ca7b48-e2a0-4e2c-839a-4887a2843011.png)
 
 ## Army Report(AR)
 <aside>
