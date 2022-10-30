@@ -63,7 +63,7 @@ const PersonPage = () => {
     const [Open, setOpen] = useState(false);
     const onOpenhandle = (e) => {
         setOpen(true);
-    }
+    };
 
     return (
         <div>

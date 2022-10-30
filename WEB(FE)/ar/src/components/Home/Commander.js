@@ -6,8 +6,7 @@ import { UserActions } from '../../app/slice/UserSlice';
 import UserRollCallCard from './UserRollCallCard';
 
 import { 
-    doc, 
-    onSnapshot,
+    doc,
     getDoc, 
     getDocs, 
     updateDoc, 
@@ -18,17 +17,15 @@ import {
 
 import { CallLocdata } from './hooks/HomeValue';
 import UserLocCard from './UserLocCard';
-import wait from '../../static/image/wait.png';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
 
 const RollCallCardStyle = styled.div`
   box-sizing: border-box;
@@ -67,18 +64,15 @@ const LotateStyle = styled.div`
 
 const LocCardStyle = styled.div`
   box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
   margin-top: 30px;
-  width: calc(100%);
   margin-left: 30px;
   margin-right: 30px;
   margin-bottom: 30px;
 
   .user-info{
     box-sizing: border-box;
-    flex-direction: row;
     padding-left:10px;
     padding-right:10px;
     padding-top: 10px;
@@ -228,22 +222,25 @@ const Commander = () => {
     return (
     <>
         <div className="user-location-info">
-            <Button onClick={onLocationhandle}>인원 위치 파악</Button>
-            { Ready &&
-            <>  
-                <LocCardStyle>
-                    <div>
-                        <Grid container>
-                            { element.map((User, index)=>(
-                                <Grid item xs={6} md={5} lg={5} key={index}>
-                                    <UserLocCard className='user-info' User={User} />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </div>
-                </LocCardStyle>
-            </>
-            }
+            <Paper>
+                <Typography align="center">유동병력</Typography>
+                <Button variant="success" onClick={onLocationhandle}>파악</Button>
+                { Ready &&
+                <>
+                    <LocCardStyle>
+                        <div>
+                            <Grid container  spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
+                                { element.map((User, index)=>(
+                                    <Grid item xs={6} md={8}  key={index}>
+                                        <UserLocCard className='user-info' User={User} />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </div>
+                    </LocCardStyle>
+                </>
+                }
+            </Paper>
         </div>
         <RollCallCardStyle>
             <Card className='command-rollcall'>
@@ -258,6 +255,7 @@ const Commander = () => {
                         <Button
                             variant="contained"
                             size="small" 
+                            
                             onClick={Onrollcallhandle}
                             color="primary"
                         >

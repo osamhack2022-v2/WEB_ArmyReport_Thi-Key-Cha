@@ -14,7 +14,6 @@ import { UserActions } from '../../app/slice/UserSlice';
 import { AuthActions } from '../../app/slice/AuthSlice';
 
 const AuthLoginBlock = styled.div`
-  position: fixed;
   font-famliy: GothicA1 Regular;
   label {
     color: white;
@@ -34,6 +33,7 @@ const Login = () => {
     userid : '',
     userpwd : '',
   });
+  
   const onChange = (e) => {
     const {
       target : {name, value}
@@ -115,6 +115,7 @@ const Login = () => {
           <EmailInput
             name='userid'
             placeholder="Email"
+            autoComplete='off'
             onChange={onChange}
           />
         </LabelItem>
