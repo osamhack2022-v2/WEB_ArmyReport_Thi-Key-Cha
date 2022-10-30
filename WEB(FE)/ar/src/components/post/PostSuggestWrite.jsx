@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import db from '../../database/DB_Manager';
 import { addDoc, collection } from 'firebase/firestore';
 import styled from "styled-components";
-import { Button } from './PostViewer'
 import { Post } from './PostViewer';
 
 const PostSuggestWrite = ({ user_id, user_data, coll }) => {
@@ -19,7 +18,6 @@ const PostSuggestWrite = ({ user_id, user_data, coll }) => {
       null,
       String(obj.content),
       false,
-      "건의사항"
     )
     
     try {
@@ -34,31 +32,43 @@ const PostSuggestWrite = ({ user_id, user_data, coll }) => {
 
   return(
     <>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-          <Textarea 
-            id="outlined-basic" 
-            label="건의사항" 
-            variant="outlined" 
-            type="text"
-            placeholder='건의사항' 
-            aria-invalid={!isDirty ? undefined : errors.content ? "true" : "false"} 
-            {...register('content', {
-              required: '내용은 필수 입력란입니다.',
-              minLength: {
-                value: 30,
-                message: "최소 30자 이상은 작성해야 합니다."
-            }})} />
-          {errors.content && <small role="alert">{errors.content.message}</small>}
-        <Button type="submit" disabled={isSubmitting}>아기오구에게 <strong>건의사항</strong> 남기기</Button>
-      </Form>
+      <FormBackground>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <Textarea 
+              id="outlined-basic" 
+              label="건의사항" 
+              variant="outlined" 
+              type="text"
+              placeholder='건의내용' 
+              aria-invalid={!isDirty ? undefined : errors.content ? "true" : "false"} 
+              {...register('content', {
+                required: '내용은 필수 입력란입니다.',
+                minLength: {
+                  value: 30,
+                  message: "최소 30자 이상은 작성해야 합니다."
+              }})} />
+            {errors.content && <small role="alert">{errors.content.message}</small>}
+          <Button type="submit" disabled={isSubmitting}><strong>보내기</strong></Button>
+        </Form>
+      </FormBackground>
     </>
   )
 }
 
+const FormBackground = styled.div`
+  width: 860px;
+  height: 420px;
+  border: 0;
+  margin: 0 auto;
+  border-radius: 30px;
+  background-color: #574F7D;
+`
+
 export const Form = styled.form`
-  width: 550px;
-  marign: 1.5rem 0 0;
+  width: 760px;
+  margin: 0 auto;
   position: relative;
+  padding: 30px 20px 20px 10px;
   text-algin: center;
 
   > small {
@@ -66,15 +76,33 @@ export const Form = styled.form`
   }
 `
 
+const Button = styled.button`
+  width: 15%;
+  color: white;
+  height: 36px;
+  background-color: #342F4B;
+  border: 0;
+  border-radius: 10px;
+  margin: 0.25rem 0 0;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    > strong {
+      color: tomato;
+    }
+  }
+`
 
 const Textarea = styled.textarea`
-  width: 100%;
+  width: 760px;
+  height: 300px;
   color: black;
-  border: 1px solid black;
-  box-sizing: border-box;
   outline: none;
   padding: 10px 40px 11px 1.5rem;
-  height: 80px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 30px;
 `
 
 export default PostSuggestWrite;
